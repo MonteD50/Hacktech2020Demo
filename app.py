@@ -22,6 +22,12 @@ def overall():
     advice = _generate_advice()
     return render_template('overall.html', overall_plot=overall_graph, health_graph=health_graph, finance_graph=finance_graph, productivity_graph=productivity_graph, advice=advice)
 
+#the one feature we will built on
+@app.route("/health")
+def health():
+    #coronavirus esri map
+    return render_template('health.html')
+
 @app.route('/feature')
 def feature():
     overall_graph = _overall_graph()
