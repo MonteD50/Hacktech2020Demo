@@ -30,15 +30,11 @@ div {
 }
 
 #board {
-    margin-top: 100px;
+    margin-top: 52.5px;
     height: 100%;
     left: 10%;
     right:10%;
 
-    position:relative;
+    position:absolute;
     background-color: lightseagreen;
-}
-
-#bargraph2{
-    
 }
