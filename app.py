@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, request, redirect, make_response, flash
-from graphs import _overall_graph, _health_graph, _finance_graph, _productivity_graph
+from graphs import _overall_graph, _health_graph, _finance_graph, _productivity_graph, _excersie_graph
 import json
 from accounts import LoginForm
 
@@ -27,7 +27,8 @@ def overall():
 @app.route("/health")
 def health():
     #coronavirus esri map
-    return render_template('health.html')
+    excersie_graph = _excersie_graph()
+    return render_template('health.html', excersie_graph=excersie_graph)
 
 @app.route('/feature')
 def feature():

@@ -50,3 +50,10 @@ def _productivity_graph():
     graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
 
     return graphJSON
+
+def _excersie_graph():
+    y_demo_walked_one_day_data = [4.1, 2.3, 4.5, 6.5,3.3,7.8, 4.4, 4.4, 3.4, 6.5, 4.3, 4.9, 4.0, 4.9, 3.97, 4.32]
+    data = go.Figure().add_trace(go.Bar(x=X_demo_overall_one_day_data, y=y_demo_walked_one_day_data, name="Miles Walked")).update_layout(title_text='Miles Walked',yaxis_title="Miles",xaxis_rangeslider_visible=True, autosize=True,width=500, height=500, margin=dict(l=50,r=50,b=100,pad=4), plot_bgcolor='black',xaxis_showgrid=False, yaxis_showgrid=False)
+    graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return graphJSON
