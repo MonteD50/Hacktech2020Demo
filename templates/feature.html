@@ -1,21 +1,78 @@
+<!--
+  extends 'base.html' inherits from base.html
+-->
+
+<!--
+
+-->
+
 {% extends 'base.html' %}
 {% block body %} 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-    <div class="chart" id="bargraph">
-        <script>
-            var overallGraph = {{ overall_plot | safe }};
-            var healthGraph = {{ health_graph | safe }};
-            var financeGraph = {{ finance_graph | safe }};
-            var productivityGraph = {{ productivity_graph | safe }};
-            Plotly.plot('bargraph',overallGraph,{});
-            Plotly.plot('bargraph',healthGraph,{});
-            Plotly.plot('bargraph',financeGraph,{});
-            Plotly.plot('bargraph',productivityGraph,{});
-        </script>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="chart" id="bargraph">
+            <script>
+                var graphName = 'bargraph';
+                var overallGraph = {{ overall_plot | safe }};
+                var healthGraph = {{ health_graph | safe }};
+                var financeGraph = {{ finance_graph | safe }};
+                var productivityGraph = {{ productivity_graph | safe }};
+                var update = {
+                width: 600,
+                height: 700
+              };
+                Plotly.plot(graphName,overallGraph,{});
+                Plotly.plot(graphName,healthGraph,{});
+                Plotly.plot(graphName,financeGraph,{});
+                Plotly.plot(graphName,productivityGraph,{});
+                Plotly.relayout(graphName,update);
+            </script>
+          </div>
+        </div>
+        <div class="col">
+          <div class="chart" id="bargraph2">
+            <script>
+                var graphName = 'bargraph2';
+                var overallGraph = {{ overall_plot | safe }};
+                var healthGraph = {{ health_graph | safe }};
+                var financeGraph = {{ finance_graph | safe }};
+                var productivityGraph = {{ productivity_graph | safe }};
+                var update = {
+                  width: 480,
+                  height: 480
+                };
+                Plotly.plot(graphName,overallGraph,{});
+                Plotly.plot(graphName,healthGraph,{});
+                Plotly.plot(graphName,financeGraph,{});
+                Plotly.plot(graphName,productivityGraph,{});
+                Plotly.relayout(graphName,update);
+            </script>
+          </div>
+          <div class="chart" id="bargraph3">
+            <script>
+                var graphName = 'bargraph3';
+                var overallGraph = {{ overall_plot | safe }};
+                var healthGraph = {{ health_graph | safe }};
+                var financeGraph = {{ finance_graph | safe }};
+                var productivityGraph = {{ productivity_graph | safe }};
+                var update = {
+                  width: 480,
+                  height: 480
+                };
+                Plotly.plot(graphName,overallGraph,{});
+                Plotly.plot(graphName,healthGraph,{});
+                Plotly.plot(graphName,financeGraph,{});
+                Plotly.plot(graphName,productivityGraph,{});
+                Plotly.relayout(graphName,update);
+            </script>
+        </div>
+      </div>
     </div>
-    <div class="messagesDiv">
-        
-    </div>
+  </div>
+
+    
 
 {% endblock %}

@@ -11,7 +11,8 @@ div {
 .menu {
     border-style: solid;
     border-color: black;
-    width: 100%;
+    left: 10%;
+    right: 10%;
     position:absolute;
 }
 
@@ -29,8 +30,8 @@ div {
 }
 
 #board {
-    margin-top: 100px;
-    height: 300px;
+    margin-top: 52.5px;
+    height: 100%;
     left: 10%;
     right:10%;
 
