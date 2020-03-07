@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block head %} 
+{% block body %} 
 <style>
     body 
     {
@@ -7,9 +7,20 @@
     }
     #bargraph 
     {
-        background-color: #eee;
+        float: left;
     }
-
+    .messages_Div
+    {
+        background-color: lightseagreen;
+        float: left;
+        width: 260px;
+        height: 600px;
+        overflow-x: hidden; 
+        overflow-x: auto;
+        overflow-y: auto;
+        scroll-behavior: smooth; 
+        text-align:justify; 
+    }
 </style>
 <body>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -26,8 +37,15 @@
             Plotly.plot('bargraph',productivityGraph,{});
         </script>
     </div>
-    <div class="messagesDiv">
-        
+    <div class="messages_Div">
+        <div class="message_Box">
+            <b><center>Recommendations:</center></b><hr>
+            <table id="messages">
+                {% for i in advice %}
+                    <tr>{{ i }}</tr><hr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
 </body>
 
