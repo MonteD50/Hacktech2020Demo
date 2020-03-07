@@ -1,6 +1,7 @@
-from flask import Flask, render_template, url_for, request, redirect, make_response
+from flask import Flask, render_template, url_for, request, redirect, make_response, flash
 from graphs import _overall_graph, _health_graph, _finance_graph, _productivity_graph
 import json
+from accounts import LoginForm
 
 app = Flask(__name__)
 
@@ -29,3 +30,15 @@ def feature():
     finance_graph = _finance_graph()
     productivity_graph = _productivity_graph()
     return render_template('feature.html', overall_plot=overall_graph, health_graph=health_graph, finance_graph=finance_graph, productivity_graph=productivity_graph)
+
+class Config(object):
+    SECRET_KEY = 'you-will-never-guess'
+app.config.from_object(Config)
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash('Login requested for user {}, remember_me={}'.format(form.username.data, form.remember_me.data))
+        return redirect('/feature')
+    return render_template('login.html', title='Sign In', form=form)
