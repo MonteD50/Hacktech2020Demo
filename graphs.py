@@ -57,3 +57,10 @@ def _excersie_graph():
     graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
 
     return graphJSON
+
+def _calorie_graph():
+    y_demo_calorie_one_day_data = [1893, 2432, 1478, 1900,2345,1976, 1673, 2497,3172, 2532, 2531, 2231, 2763, 3521, 2341, 2214]
+    data = go.Figure().add_trace(go.Bar(x=X_demo_overall_one_day_data, y=y_demo_calorie_one_day_data, name="Calorie Intake")).update_layout(title_text='Calorie Intake',yaxis_title="Calories",xaxis_rangeslider_visible=True, autosize=True,width=500, height=500, margin=dict(l=50,r=50,b=100,pad=4), plot_bgcolor='black',xaxis_showgrid=False, yaxis_showgrid=False)
+    graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return graphJSON

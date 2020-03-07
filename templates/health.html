@@ -1,6 +1,30 @@
 {% extends 'base.html' %}
 
 {% block body %} 
+<style>
+    body
+    {
+        background-color: #eee;
+    }
+    #bargraph
+    {
+        float:left;
+    }
+    #bargraph2
+    {
+        margin-top: -110px;
+        float: left;
+    }
+    #prediciton_table
+    {
+        float:left;
+        width: 510px;
+        height: 500px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding-left: 20px;
+    }
+</style>
 <body>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
@@ -10,7 +34,33 @@
             Plotly.plot('bargraph',excersiseGraph,{});
         </script>
     </div>
-
+    <div id="prediciton_table" class="table table-bordered table-dark .table-responsive">
+        <p>Note: The precentages used in this demo are placeholders and no predicitons are actually occuring at this time.</p>
+        <table>
+            <tr class="tr">
+                <th>
+                    <h5><b>Health Predictions: </b></h5>
+                </th>
+                <th>
+                    <h5><b>Accuracy: </b></h5>
+                </th>
+            </tr>
+            {% for dict_item in predicitons %}
+                {% for key, value in dict_item.items() %}
+                    <tr class="tr">
+                        <td><h6>{{key}}</h6></td>
+                        <td><h6>{{value}}</h6></td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </table>
+    </div>
+    <div class="chart" id="bargraph2">
+        <script>
+            var calorieGraph = {{ calorie_graph | safe }};
+            Plotly.plot('bargraph2',calorieGraph,{});
+        </script>
+    </div>
 </body>
 
 {% endblock %}

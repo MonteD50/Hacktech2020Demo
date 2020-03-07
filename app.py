@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, request, redirect, make_response, flash
-from graphs import _overall_graph, _health_graph, _finance_graph, _productivity_graph, _excersie_graph
+from graphs import _overall_graph, _health_graph, _finance_graph, _productivity_graph, _excersie_graph, _calorie_graph
 import json
 from accounts import LoginForm
 
@@ -13,6 +13,10 @@ def _generate_advice():
     #these are example advice. Obviusoly the real life service would have more detailed and better advice
     advice = ["Good job eating healthy but start excersing for more hours...", "Someone has contracted the Coronavirus in your average location. Wash your hands frequently. Eat healthy and keep your immune up.", "It seems you are spending too much time on Youtube. I recommend setting an alarm and establishing a strict watch time."]
     return advice
+
+def _get_health_predictions():
+    predictions = [{'Chance of getting diabeties: 0.02%':0.89,'Chance of getting heart disease: 0.04%':0.93}]
+    return predictions
 
 @app.route('/overall')
 def overall():
@@ -28,7 +32,9 @@ def overall():
 def health():
     #coronavirus esri map
     excersie_graph = _excersie_graph()
-    return render_template('health.html', excersie_graph=excersie_graph)
+    calorie_graph = _calorie_graph()
+    predicitons = _get_health_predictions()
+    return render_template('health.html', excersie_graph=excersie_graph, calorie_graph=calorie_graph,predicitons=predicitons)
 
 @app.route('/feature')
 def feature():
