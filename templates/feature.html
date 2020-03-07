@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
-{% block head %}
-<title>{{feature}}</title>
-<header>
-    <nav class="menu">
-      <div class="header-wrapper">
-      </div>
-    </nav>
-  </header>
-{% endblock %}
-
-{% block body %}
-
-{% endblock %}
-
-{% block body2 %}
+{% block body %} 
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <div class="chart" id="bargraph">
+        <script>
+            var overallGraph = {{ overall_plot | safe }};
+            var healthGraph = {{ health_graph | safe }};
+            var financeGraph = {{ finance_graph | safe }};
+            var productivityGraph = {{ productivity_graph | safe }};
+            Plotly.plot('bargraph',overallGraph,{});
+            Plotly.plot('bargraph',healthGraph,{});
+            Plotly.plot('bargraph',financeGraph,{});
+            Plotly.plot('bargraph',productivityGraph,{});
+        </script>
+    </div>
+    <div class="messagesDiv">
+        
+    </div>
 
 {% endblock %}

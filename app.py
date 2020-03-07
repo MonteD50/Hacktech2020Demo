@@ -15,3 +15,11 @@ def overall():
     finance_graph = _finance_graph()
     productivity_graph = _productivity_graph()
     return render_template('overall.html', overall_plot=overall_graph, health_graph=health_graph, finance_graph=finance_graph, productivity_graph=productivity_graph)
+
+@app.route('/feature')
+def feature():
+    overall_graph = _overall_graph()
+    health_graph = _health_graph()
+    finance_graph = _finance_graph()
+    productivity_graph = _productivity_graph()
+    return render_template('feature.html', overall_plot=overall_graph, health_graph=health_graph, finance_graph=finance_graph, productivity_graph=productivity_graph)

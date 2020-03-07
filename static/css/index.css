@@ -1,11 +1,10 @@
 body {
     margin: 0;
     font-family: Consolas;
-    background-color: brown;
 }
 
 div {
-    background-color: lightblue;
+    background-color: yellow;
 
 }
 
@@ -17,8 +16,10 @@ div {
 }
 
 header{
-    background-color: green;
-    padding:6px;
+    background-color: blue;
+    padding:100px;
+    width: 100%;
+
 }
 
 #logo {
@@ -41,5 +42,5 @@ header{
     right:10%;
 
     position:absolute;
-    background-color: lightseagreen;
+    background-color: red;
 }
