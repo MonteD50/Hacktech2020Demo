@@ -73,6 +73,7 @@ def login():
 
     if loginform.submitlogin.data and loginform.validate():
         user = username_to_user(loginform.username.data) #make this retrieve the user from the database based on username
+        print('This is the user: ', user)
         if user is None or not user.check_password(loginform.password.data):
             flash('Invalid username or password')
             return redirect('/login')
@@ -82,10 +83,11 @@ def login():
         if request.args.get('next'):
             return flask.abort(400)
         return redirect('/account')
-    elif regform.submitreg.data and regform.validate_on_submit():
-        user = User(username=regform.username.data, email=regform.email.data)
-        user.set_password(regform.password.data)
 
+    elif regform.submitreg.data and regform.validate():
+        user = User(username=regform.username.data, email=regform.email.data, userid = new_id())
+        user.set_password(regform.password.data)
+        print(regform.password.data)
         push_user(user)
         flash('Congratulations, you are now a registered user!')
         # is_safe_url should check if the url is safe for redirects.
