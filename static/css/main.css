@@ -25,6 +25,7 @@ div {
     position:relative;
     float:left;
     text-align: center;
+    height:44px;
 }
 
 .topbar {
