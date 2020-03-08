@@ -3,15 +3,7 @@ from flask_login import LoginManager, login_user, current_user, login_required, 
 import os
 from graphs import _overall_graph, _health_graph, _finance_graph, _productivity_graph, _excersie_graph, _calorie_graph
 import json
-from accounts import LoginForm
-import pyrebase 
-import firebaseConfig
-
-
-
-firebase = pyrebase.initialize_app(firebaseConfig)
-db = firebase.database()
-from accounts import LoginForm, RegistrationForm, User, username_to_user, id_to_user
+from accounts import LoginForm, RegistrationForm, User, username_to_user, id_to_user, push_user, new_id
 
 app = Flask(__name__)
 
@@ -62,24 +54,11 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 @login_manager.user_loader
-def load_user(id):
-    return id_to_user(id) #retrieve the user based on the id
+def load_user(userid):
+    return id_to_user(userid) #retrieve the user based on the id
 
 @app.route('/login', methods=['GET','POST'])
 def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        name = request.form['username']
-        password = request.form['password']
-        db.child('usernames').push(name)
-        db.child('passwords').push(password)
-        #usernames = db.child('usernames').get()
-        #passwords = db.child('passwords').get()
-        #return usernames.val()  
-        #return passwords.val()
-        #flash('Login requested for user {}, remember_me={}'.format(form.username.data, form.remember_me.data))
-        return redirect('/feature')
-    return render_template('login.html', title='Sign In', form=form)
     if current_user.is_authenticated:
         return redirect(url_for('overall'))
 
@@ -91,7 +70,6 @@ def login():
         if user is None or not user.check_password(loginform.password.data):
             flash('Invalid username or password')
             return redirect('/login')
-        print (id_to_user(0).name)
         login_user(user)
         # is_safe_url should check if the url is safe for redirects.
         # This code simply forbids redirects
@@ -102,7 +80,7 @@ def login():
         user = User(username=regform.username.data, email=regform.email.data)
         user.set_password(regform.password.data)
 
-        #add user
+        push_user(user)
         flash('Congratulations, you are now a registered user!')
         # is_safe_url should check if the url is safe for redirects.
         # This code simply forbids redirects
