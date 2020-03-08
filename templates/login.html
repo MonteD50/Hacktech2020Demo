@@ -1,18 +1,65 @@
 {% extends "base.html" %}
 
 {% block body %}
-    <h1>Sign In</h1>
-    <form action="/login" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
+<div class="container">
+    <div class="row">
+      <div class="col">
+            <h1>Sign In</h1>
+            <form action="" method="post" novalidate>
+                {{ loginform.hidden_tag() }}
+                <p>
+                    {{ loginform.username.label }}<br>
+                    {{ loginform.username(size=32) }}
+                    {% for error in loginform.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ loginform.password.label }}<br>
+                    {{ loginform.password(size=32) }}
+                    {% for error in loginform.password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>{{ loginform.remember_me() }} {{ loginform.remember_me.label }}</p>
+                <p>{{ loginform.submitlogin() }}</p>
+                <p>{{"\n".join(get_flashed_messages())}}</p>
+            </form>
+        </div>
+        <div class="col">
+            <h1>Register</h1>
+            <form action="" method="post">
+                {{ regform.hidden_tag() }}
+                <p>
+                    {{ regform.username.label }}<br>
+                    {{ regform.username(size=32) }}<br>
+                    {% for error in regform.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ regform.email.label }}<br>
+                    {{ regform.email(size=64) }}<br>
+                    {% for error in regform.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ regform.password.label }}<br>
+                    {{ regform.password(size=32) }}<br>
+                    {% for error in regform.password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ regform.password2.label }}<br>
+                    {{ regform.password2(size=32) }}<br>
+                    {% for error in regform.password2.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>{{ regform.submitreg() }}</p>
+            </form>
+        </div>
+>>>>>>> 1fb584a40d6a54a40b6dc6ef1c651a7a2ce5e27e
 {% endblock %}

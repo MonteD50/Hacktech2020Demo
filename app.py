@@ -1,28 +1,23 @@
-from flask import Flask, render_template, url_for, request, redirect, make_response, flash
+from flask import Flask, render_template, url_for, request, redirect, make_response, flash, get_flashed_messages
+from flask_login import LoginManager, login_user, current_user, login_required, logout_user
+import os
 from graphs import _overall_graph, _health_graph, _finance_graph, _productivity_graph, _excersie_graph, _calorie_graph
 import json
 from accounts import LoginForm
 import pyrebase 
+import firebaseConfig
 
-firebaseConfig = {
-    "apiKey": "AIzaSyCmsBtI_-G5-LBGyQCLHSJx4VNofyNPE90",
-    "authDomain": "mytest-19777.firebaseapp.com",
-    "databaseURL": "https://mytest-19777.firebaseio.com",
-    "projectId": "mytest-19777",
-    "storageBucket": "mytest-19777.appspot.com",
-    "messagingSenderId": "956995070498",
-    "appId": "1:956995070498:web:659ab90e8c55cf6513387b",
-    "measurementId": "G-HYS8L9CWBD"
-}
+
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
+from accounts import LoginForm, RegistrationForm, User, username_to_user, id_to_user
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return redirect('/feature')
 
 def _generate_advice():
     #these are example advice. Obviusoly the real life service would have more detailed and better advice
@@ -60,8 +55,15 @@ def feature():
     return render_template('feature.html', overall_plot=overall_graph, health_graph=health_graph, finance_graph=finance_graph, productivity_graph=productivity_graph)
 
 class Config(object):
-    SECRET_KEY = 'you-will-never-guess'
+    SECRET_KEY = os.urandom(16)
 app.config.from_object(Config)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(id):
+    return id_to_user(id) #retrieve the user based on the id
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -78,3 +80,46 @@ def login():
         #flash('Login requested for user {}, remember_me={}'.format(form.username.data, form.remember_me.data))
         return redirect('/feature')
     return render_template('login.html', title='Sign In', form=form)
+    if current_user.is_authenticated:
+        return redirect(url_for('overall'))
+
+    loginform = LoginForm()
+    regform = RegistrationForm()
+
+    if loginform.submitlogin.data and loginform.validate():
+        user = username_to_user(loginform.username.data) #make this retrieve the user from the database based on username
+        if user is None or not user.check_password(loginform.password.data):
+            flash('Invalid username or password')
+            return redirect('/login')
+        print (id_to_user(0).name)
+        login_user(user)
+        # is_safe_url should check if the url is safe for redirects.
+        # This code simply forbids redirects
+        if request.args.get('next'):
+            return flask.abort(400)
+        return redirect('/account')
+    elif regform.submitreg.data and regform.validate_on_submit():
+        user = User(username=regform.username.data, email=regform.email.data)
+        user.set_password(regform.password.data)
+
+        #add user
+        flash('Congratulations, you are now a registered user!')
+        # is_safe_url should check if the url is safe for redirects.
+        # This code simply forbids redirects
+        if request.args.get('next'):
+            return flask.abort(400)
+        return redirect('/account')
+    return render_template('login.html', title='Sign In', loginform=loginform, regform=regform)
+
+@app.route("/account")
+def account():
+    if current_user.is_authenticated:
+        return render_template('account.html', username=current_user.name, num=current_user.id)
+    else:
+        return redirect('/login')
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect('/login')
