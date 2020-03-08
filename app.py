@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect, make_response, flash, get_flashed_messages
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 import os
+from diabetes_predict import predict_diabeties
 from graphs import _overall_graph, _health_graph, _finance_graph, _productivity_graph, _excersie_graph, _calorie_graph
 import json
 from accounts import LoginForm, RegistrationForm, User, username_to_user, id_to_user, push_user, new_id
@@ -9,7 +10,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return redirect('/feature')
+    return redirect('/overall')
 
 def _generate_advice():
     #these are example advice. Obviusoly the real life service would have more detailed and better advice
@@ -17,7 +18,12 @@ def _generate_advice():
     return advice
 
 def _get_health_predictions():
-    predictions = [{'Chance of getting diabeties: 0.02%':0.89,'Chance of getting heart disease: 0.04%':0.93}]
+    diabetes, accuracy = predict_diabeties()
+    if diabetes[0] == 0:
+        t = "It is predicted you currently will not get diabeties"
+    else:
+        t = "It is predicted you currently might devolop diabeties. However, please seek a medical professional for an accurate measurment."
+    predictions = [{t:accuracy,'Chance of getting heart disease: 0.04%':0.93}]
     return predictions
 
 @app.route('/overall')
