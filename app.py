@@ -2,6 +2,21 @@ from flask import Flask, render_template, url_for, request, redirect, make_respo
 from graphs import _overall_graph, _health_graph, _finance_graph, _productivity_graph, _excersie_graph, _calorie_graph
 import json
 from accounts import LoginForm
+import pyrebase 
+
+firebaseConfig = {
+    "apiKey": "AIzaSyCmsBtI_-G5-LBGyQCLHSJx4VNofyNPE90",
+    "authDomain": "mytest-19777.firebaseapp.com",
+    "databaseURL": "https://mytest-19777.firebaseio.com",
+    "projectId": "mytest-19777",
+    "storageBucket": "mytest-19777.appspot.com",
+    "messagingSenderId": "956995070498",
+    "appId": "1:956995070498:web:659ab90e8c55cf6513387b",
+    "measurementId": "G-HYS8L9CWBD"
+}
+
+firebase = pyrebase.initialize_app(firebaseConfig)
+db = firebase.database()
 
 app = Flask(__name__)
 
@@ -52,6 +67,14 @@ app.config.from_object(Config)
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        flash('Login requested for user {}, remember_me={}'.format(form.username.data, form.remember_me.data))
+        name = request.form['username']
+        password = request.form['password']
+        db.child('usernames').push(name)
+        db.child('passwords').push(password)
+        #usernames = db.child('usernames').get()
+        #passwords = db.child('passwords').get()
+        #return usernames.val()  
+        #return passwords.val()
+        #flash('Login requested for user {}, remember_me={}'.format(form.username.data, form.remember_me.data))
         return redirect('/feature')
     return render_template('login.html', title='Sign In', form=form)

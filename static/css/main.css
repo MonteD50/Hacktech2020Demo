@@ -17,9 +17,12 @@ div {
 }
 
 #logo {
-    position:relative;
-    padding:10px;
+    position:absolute;
+    height: 100%;
+    width: 10%;
+    padding:0px;
     float:left;
+    text-align: center;
 }
 
 #account {
