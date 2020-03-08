@@ -5,15 +5,15 @@ from diabetes_predict import predict_diabeties
 from graphs import _overall_graph, _health_graph, _finance_graph, _productivity_graph, _excersie_graph, _calorie_graph
 import json
 from accounts import LoginForm
-#import pyrebase 
-#import firebaseConfig
+import pyrebase 
+import firebaseConfig
 
 
-"""
+
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
 from accounts import LoginForm, RegistrationForm, User, username_to_user, id_to_user
-"""
+
 app = Flask(__name__)
 
 @app.route("/")
