@@ -1,43 +1,48 @@
 body {
     margin: 0;
-    font-family: Consolas;
 }
 
 div {
     background-color: lightblue;
-
+    border-radius: 15px;
+    padding:5px;
+    font-family: "Helvetica";
 }
 
-.menu {
-    border-style: solid;
-    border-color: black;
+.header-wrapper {
+    background-image: linear-gradient(lightblue,lightseagreen);
+    border-radius: 15px;
     left: 10%;
     right: 10%;
     position:absolute;
+    float:center;
+}
+
+.container {
+    margin:25px;
 }
 
 #logo {
     position:absolute;
-    height: 100%;
     width: 10%;
     padding:0px;
     float:left;
     text-align: center;
 }
 
-#account {
+.topbar {
     position:relative;
     padding: 10px;
+    margin-right:10px;
     overflow: hidden;
     float:right;
 }
 
 #board {
-    margin-top: 52.5px;
-    height: 100%;
+    margin-top: 60px;
     left: 10%;
     right:10%;
 
     position:absolute;
-    background-color: lightseagreen;
+    background-image: linear-gradient(lightblue,lightseagreen);
 }
