@@ -1,16 +1,15 @@
 body {
-    margin: 0;
+    background-color: lightseagreen !important;
 }
 
 div {
-    background-color: lightblue;
     border-radius: 15px;
     padding:5px;
     font-family: "Helvetica";
+    background-color: white;
 }
 
 .header-wrapper {
-    background-image: linear-gradient(lightblue,lightseagreen);
     border-radius: 15px;
     left: 10%;
     right: 10%;
@@ -44,5 +43,4 @@ div {
     right:10%;
 
     position:absolute;
-    background-image: linear-gradient(lightblue,lightseagreen);
 }
