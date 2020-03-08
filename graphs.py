@@ -64,3 +64,10 @@ def _calorie_graph():
     graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
 
     return graphJSON
+
+def _revenue_graph():
+    y_demo_revenue_one_day_data = [0, 0, 0, 0,0,0, 0, 0,0, 0, 0,0, 0, 0, 0, 0]
+    data = go.Figure().add_trace(go.Scatter(x=X_demo_overall_one_day_data, y=y_demo_revenue_one_day_data, name="Profit")).update_layout(title_text='Profit Made From Selling to Advertisers',yaxis_title="$", autosize=True,width=500, height=500, margin=dict(l=50,r=50,b=100,pad=4), plot_bgcolor='black',xaxis_showgrid=False, yaxis_showgrid=False)
+    graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return graphJSON

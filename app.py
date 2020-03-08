@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, request, redirect, make_respo
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 import os
 from diabetes_predict import predict_diabeties
-from graphs import _overall_graph, _health_graph, _finance_graph, _productivity_graph, _excersie_graph, _calorie_graph
+from graphs import _overall_graph, _health_graph, _finance_graph, _productivity_graph, _excersie_graph, _calorie_graph, _revenue_graph
 import json
 from accounts import LoginForm, RegistrationForm, User, username_to_user, id_to_user, push_user, new_id
 
@@ -100,7 +100,8 @@ def login():
 @app.route("/account")
 def account():
     if current_user.is_authenticated:
-        return render_template('account.html', username=current_user.name, num=current_user.id)
+        profit = _revenue_graph()
+        return render_template('account.html', username=current_user.name, num=current_user.id, profit=profit)
     else:
         return redirect('/login')
 
